@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f3ece3">
+<title>АМ ТОРТ — Десерты на заказ</title>
+<style>
+  :root{
+    --cream:#f4eee6;
+    --paper:#fbf8f4;
+    --milk:#fffdf9;
+    --ink:#221916;
+    --muted:#776a63;
+    --cocoa:#4c2d25;
+    --cocoa-2:#6b4538;
+    --rose:#d9ada5;
+    --rose-soft:#edd8d2;
+    --line:rgba(54,35,28,.13);
+    --shadow:0 22px 60px rgba(54,35,28,.12);
+    --radius:24px;
+    --serif: Georgia, 'Times New Roman', 'Playfair Display', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'DM Sans', Arial, sans-serif;
+    --header-h: 74px;
+    --ease-out: cubic-bezier(.22,.9,.28,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    overflow-x:hidden;
+    min-height:100dvh;
+  }
+  body.no-scroll{overflow:hidden}
+  img{display:block;width:100%;max-width:100%}
+  button,input,select,textarea{font:inherit}
+  button{border:0;background:none;color:inherit;cursor:pointer}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--cocoa);color:#fff}
+
+  .progress-bar{
+    position:fixed;inset:0 0 auto 0;height:3px;width:0;z-index:200;
+    background:var(--cocoa);
+    transform-origin:left center;
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header{
+    position:fixed;top:0;left:0;right:0;z-index:120;
+    transition:transform var(--ease-out) .35s;
+  }
+  .header-wrap{
+    width:min(1400px,calc(100% - 32px));
+    margin:14px auto 0;
+    padding:12px 16px 12px 22px;
+    display:flex;align-items:center;gap:28px;
+    border:1px solid transparent;
+    transition:background .35s var(--ease-out), border-color .35s var(--ease-out),
+               box-shadow .35s var(--ease-out), padding .35s var(--ease-out);
+  }
+  .site-header.scrolled .header-wrap{
+    background:rgba(255,253,249,.86);
+    border-color:rgba(54,35,28,.08);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 10px 35px rgba(54,35,28,.08);
+    border-radius:999px;
+  }
+  .brand{display:flex;flex-direction:column;line-height:.85;flex:0 0 auto}
+  .brand-main{font-family:var(--serif);font-size:28px;letter-spacing:.22em}
+  .brand-sub{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+
+  .nav{display:flex;gap:26px;align-items:center;margin:auto}
+  .nav a{
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    color:#4a3b36;position:relative;padding:7px 0;
+    transition:color .25s var(--ease-out);
+  }
+  .nav a::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:1px;
+    background:var(--cocoa);transition:width .3s var(--ease-out);
+  }
+  .nav a:hover::after{width:100%}
+  .header-actions{display:flex;align-items:center;gap:8px}
+  .icon-btn,.menu-btn{
+    width:42px;height:42px;border:1px solid var(--line);border-radius:50%;
+    display:grid;place-items:center;background:rgba(255,255,255,.28);
+    transition:transform .3s var(--ease-out), background .3s var(--ease-out);
+  }
+  .icon-btn:hover,.menu-btn:hover{transform:translateY(-2px) scale(1.05);background:#fff}
+  .cart-btn{position:relative}
+  .cart-count{
+    position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;padding:0 4px;
+    border-radius:99px;background:var(--cocoa);color:#fff;font-size:9px;
+    display:grid;place-items:center;
+    font-variant-numeric: tabular-nums;
+  }
+  .menu-btn{display:none}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;display:grid;place-items:center;overflow:hidden;
+    background:
+      radial-gradient(circle at 78% 36%, rgba(217,173,165,.34), transparent 26%),
+      linear-gradient(120deg,#f5eee6 0%,#efe6db 52%,#ead7ce 100%);
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;opacity:.32;pointer-events:none;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,.9), transparent 18%),
+      radial-gradient(circle at 80% 75%, rgba(111,73,61,.15), transparent 22%);
+  }
+  .hero-inner{
+    width:min(1400px,calc(100% - 32px));
+    padding:120px 0 60px;
+    display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:center;
+    position:relative;z-index:2;
+  }
+  .hero-copy{padding-left:5vw;max-width:650px}
+  .eyebrow{
+    text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--muted);
+    display:flex;align-items:center;gap:10px;margin-bottom:20px;
+  }
+  .eyebrow::before{content:"";width:32px;height:1px;background:var(--rose)}
+  h1,h2,h3{font-family:var(--serif);font-weight:500}
+  h1{font-size:clamp(50px,6.5vw,104px);line-height:.9;letter-spacing:-.05em;max-width:670px}
+  .hero-lead{margin:22px 0 28px;max-width:465px;color:var(--muted);font-size:15px;line-height:1.7}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    min-height:50px;padding:0 22px;border-radius:999px;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:600;
+    transition:transform .35s var(--ease-out), background .3s var(--ease-out),
+               box-shadow .35s var(--ease-out), color .3s var(--ease-out);
+    will-change:transform;
+  }
+  .btn-primary{background:var(--cocoa);color:#fff;box-shadow:0 15px 30px rgba(76,45,37,.18)}
+  .btn-primary:hover{transform:translateY(-3px) scale(1.03);background:#3d241f;box-shadow:0 22px 40px rgba(76,45,37,.26)}
+  .btn-secondary{border:1px solid rgba(76,45,37,.22);background:rgba(255,255,255,.26)}
+  .btn-secondary:hover{transform:translateY(-3px) scale(1.03);background:#fff;box-shadow:0 18px 30px rgba(76,45,37,.12)}
+
+  /* ---- Hero photo — прямо, без наклона и анимации ---- */
+  .hero-visual{position:relative;display:grid;place-items:center}
+  .hero-glow{
+    position:absolute;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.78),rgba(255,255,255,0) 70%);
+    filter:blur(2px);
+  }
+  .hero-photo{
+    position:relative;z-index:3;
+    width:min(560px,100%);
+    height:auto;
+    aspect-ratio:4/5;
+    object-fit:cover;object-position:center;
+    border-radius:24px;
+    box-shadow:0 35px 70px rgba(62,34,26,.18);
+    transition:box-shadow .6s var(--ease-out), transform .6s var(--ease-out);
+  }
+  .hero-photo:hover{
+    transform:scale(1.01);
+    box-shadow:0 45px 90px rgba(62,34,26,.24);
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .section{padding:90px 0}
+  .section-soft{background:#efe0d8}
+  .container{width:min(1280px,calc(100% - 32px));margin:auto}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:36px}
+  .section-kicker{font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:var(--muted);margin-bottom:10px}
+  .section-title{font-size:clamp(38px,5vw,70px);line-height:.95;letter-spacing:-.04em}
+  .section-desc{max-width:420px;color:var(--muted);font-size:14px;line-height:1.7}
+
+  /* Catalog filters */
+  .catalog-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .catalog-filter{
+    min-height:38px;padding:0 18px;border-radius:999px;
+    border:1px solid var(--line);background:rgba(255,255,255,.5);
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    display:inline-flex;align-items:center;justify-content:center;
+    transition:background .3s var(--ease-out), color .3s var(--ease-out),
+               border-color .3s var(--ease-out), transform .3s var(--ease-out),
+               box-shadow .3s var(--ease-out);
+    color:var(--ink);
+  }
+  .catalog-filter:hover{background:#fff;transform:translateY(-1px)}
+  .catalog-filter.active{
+    background:var(--cocoa);color:#fff;border-color:var(--cocoa);
+    box-shadow:0 10px 22px rgba(76,45,37,.22);
+  }
+  .catalog-filter:first-child{min-height:46px;padding:0 24px;font-weight:600}
+
+  /* Products */
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .product-card{
+    background:var(--paper);border:1px solid rgba(54,35,28,.08);border-radius:24px;overflow:hidden;
+    transition:transform .5s var(--ease-out), box-shadow .5s var(--ease-out), border-color .5s var(--ease-out);
+    position:relative;
+  }
+  .product-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 28px 60px rgba(54,35,28,.14);
+    border-color:rgba(76,45,37,.18);
+  }
+  .product-media{height:300px;position:relative;overflow:hidden;background:linear-gradient(145deg,#eee4da,#c8afa1)}
+  .product-media .real-photo{
+    transition:transform .8s var(--ease-out);
+    will-change:transform;
+  }
+  .product-card:hover .product-media .real-photo{
+    transform:scale(1.07);
+  }
+  .product-badge{
+    position:absolute;left:14px;top:14px;padding:8px 10px;border-radius:999px;
+    background:rgba(255,255,255,.74);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    font-size:9px;letter-spacing:.1em;text-transform:uppercase;z-index:2;
+  }
+  .favorite{
+    position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:50%;
+    background:rgba(255,255,255,.74);border:1px solid rgba(54,35,28,.08);z-index:2;
+    transition:transform .3s var(--ease-out), background .3s var(--ease-out);
+  }
+  .favorite:hover{transform:scale(1.1);background:#fff}
+  .product-info{padding:16px}
+  .product-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+  .product-title{font-family:var(--serif);font-size:26px;margin:9px 0 6px}
+  .product-desc{font-size:12px;line-height:1.5;color:var(--muted);min-height:34px}
+  .product-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+  .product-price{
+    font-family:var(--serif);font-size:22px;
+    font-variant-numeric: tabular-nums;
+  }
+  .add-btn{
+    height:40px;padding:0 14px;border-radius:999px;background:var(--cocoa);color:#fff;
+    font-size:10px;text-transform:uppercase;letter-spacing:.08em;
+    transition:transform .3s var(--ease-out), background .3s var(--ease-out);
+  }
+  .add-btn:hover{transform:scale(1.05);background:#3d241f}
+
+  /* Constructor */
+  .builder{display:grid;grid-template-columns:1fr;gap:14px}
+  .builder-panel{
+    border-radius:24px;overflow:hidden;background:var(--paper);
+    border:1px solid rgba(54,35,28,.08);
+    padding:24px;width:100%;
+  }
+  .builder-step{padding:16px 0;border-bottom:1px solid var(--line)}
+  .builder-step:first-child{padding-top:0}
+  .builder-step:last-of-type{border-bottom:0}
+  .builder-label{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .builder-label strong{font-family:var(--serif);font-size:21px;font-weight:500}
+  .builder-label span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .option-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .option{
+    padding:10px 12px;border:1px solid var(--line);border-radius:12px;text-align:left;
+    background:#fffdfa;
+    transition:border-color .3s var(--ease-out), box-shadow .3s var(--ease-out), transform .3s var(--ease-out);
+  }
+  .option:hover{transform:translateY(-2px);border-color:rgba(76,45,37,.35)}
+  .option.active{
+    border-color:var(--cocoa);
+    box-shadow:inset 0 0 0 1px var(--cocoa), 0 8px 20px rgba(76,45,37,.12);
+  }
+  .option b{display:block;font-size:11px}
+  .option span{display:block;margin-top:3px;font-size:10px;color:var(--muted)}
+  .builder-note{color:var(--muted);font-size:11px;line-height:1.5}
+  .builder-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px;flex-wrap:wrap}
+  .builder-total{font-family:var(--serif);font-size:26px;font-variant-numeric: tabular-nums}
+
+  /* Gallery */
+  .gallery{display:grid;grid-template-columns:1.2fr .8fr .8fr;grid-template-rows:280px 220px;gap:12px}
+  .gallery-item{overflow:hidden;border-radius:22px;position:relative;background:#d7c0b2}
+  .gallery-item:nth-child(1){grid-row:span 2}
+  .gallery-item .real-photo{
+    transition:transform .9s var(--ease-out);
+    will-change:transform;
+  }
+  .gallery-item:hover .real-photo{transform:scale(1.07)}
+  .gallery-caption{
+    position:absolute;left:14px;right:14px;bottom:12px;color:#fff;font-size:10px;
+    text-transform:uppercase;letter-spacing:.1em;text-shadow:0 2px 8px rgba(0,0,0,.25);z-index:2;
+  }
+
+  /* Reviews */
+  .reviews-shell{position:relative;overflow:hidden}
+  .review-slider{display:flex;transition:transform .7s var(--ease-out)}
+  .review-card{min-width:100%;display:grid;grid-template-columns:.75fr 1.25fr;gap:26px;padding:24px 0}
+  .review-photo{min-height:280px;border-radius:22px;overflow:hidden;position:relative}
+  .review-content{display:flex;flex-direction:column;justify-content:center}
+  .stars{letter-spacing:.12em;font-size:13px;margin-bottom:14px}
+  .quote{font-family:var(--serif);font-size:clamp(28px,3.6vw,52px);line-height:1.05;letter-spacing:-.03em;max-width:650px}
+  .review-author{margin-top:24px}
+  .author-name{font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  .author-meta{font-size:10px;color:var(--muted);margin-top:4px}
+
+  /* Заголовок отзывов + стрелки напротив слов */
+  .reviews-head{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    margin-bottom:28px;
+  }
+  .reviews-head .reviews-head-left{display:flex;flex-direction:column}
+  .slider-controls{display:flex;gap:8px;flex:0 0 auto}
+  .slider-btn{
+    width:44px;height:44px;border:1px solid var(--line);border-radius:50%;
+    display:grid;place-items:center;
+    transition:transform .3s var(--ease-out), background .3s var(--ease-out);
+  }
+  .slider-btn:hover{transform:scale(1.08);background:#fff}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .about-card{border-radius:24px;padding:40px;background:var(--paper);min-height:380px}
+  .about-card h2{font-size:clamp(38px,4vw,58px);line-height:.98}
+  .about-card p{margin-top:16px;max-width:480px;color:var(--muted);line-height:1.75;font-size:14px}
+  .about-photo{border-radius:24px;min-height:380px;position:relative;overflow:hidden;background:linear-gradient(145deg,#654137,#2e1a16)}
+  .facts{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .fact{padding:12px;border-top:1px solid var(--line)}
+  .fact b{font-family:var(--serif);font-size:26px}
+  .fact span{display:block;font-size:10px;color:var(--muted);margin-top:3px}
+
+  .delivery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .delivery-card{
+    background:var(--paper);border-radius:22px;padding:24px;min-height:180px;
+    border:1px solid rgba(54,35,28,.07);
+    transition:transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
+  }
+  .delivery-card:hover{transform:translateY(-4px);box-shadow:0 22px 40px rgba(54,35,28,.10)}
+  .delivery-num{font-size:10px;letter-spacing:.16em;color:var(--muted)}
+  .delivery-card h3{font-size:26px;margin:20px 0 8px}
+  .delivery-card p{color:var(--muted);font-size:12px;line-height:1.55}
+
+  /* Final CTA */
+  .final-cta{
+    position:relative;display:grid;place-items:center;text-align:center;overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 45%,rgba(181,125,111,.32),transparent 27%),
+      linear-gradient(145deg,#291613,#3e201b 55%,#1f1110);
+    color:#fff;padding:80px 16px;
+  }
+  .final-cta::before,.final-cta::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
+  .final-cta::before{width:540px;height:540px;left:-230px;bottom:-280px}
+  .final-cta::after{width:420px;height:420px;right:-160px;top:-170px}
+  .final-inner{position:relative;z-index:2}
+  .final-inner .eyebrow{color:#cdb8ae;justify-content:center}
+  .final-inner .eyebrow::before{background:#987064}
+  .final-inner h2{font-size:clamp(50px,6.5vw,92px);max-width:850px;line-height:.9}
+  .final-inner p{max-width:520px;margin:20px auto 26px;color:#cdb8ae;line-height:1.65;font-size:14px}
+  .btn-light{background:#f7efe9;color:var(--cocoa)}
+  .social-row{display:flex;justify-content:center;gap:8px;margin-top:30px}
+  .social-row a{
+    width:36px;height:36px;border:1px solid rgba(255,255,255,.15);border-radius:50%;
+    display:grid;place-items:center;font-size:11px;
+    transition:transform .3s var(--ease-out), background .3s var(--ease-out), border-color .3s var(--ease-out);
+  }
+  .social-row a:hover{transform:translateY(-3px);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.3)}
+
+  footer{padding:30px 0;background:#1d100e;color:#c8b1a7}
+  .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:28px}
+  .footer-brand .brand-main{color:#fff}
+  .footer-brand p{max-width:290px;font-size:11px;line-height:1.6;margin-top:14px}
+  .footer-col h4{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#fff;margin-bottom:12px}
+  .footer-col a,.footer-col button{
+    display:block;font-size:11px;margin:8px 0;color:#bda79d;text-align:left;
+    transition:color .25s var(--ease-out);
+  }
+  .footer-col a:hover,.footer-col button:hover{color:#fff}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:24px;padding-top:16px;display:flex;justify-content:space-between;gap:15px;font-size:9px;text-transform:uppercase;letter-spacing:.1em}
+
+  /* Overlay + drawer + modal */
+  .overlay{position:fixed;inset:0;background:rgba(29,16,14,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s var(--ease-out), visibility .35s;z-index:150}
+  .overlay.show{opacity:1;visibility:visible}
+
+  /* ---------- DRAWER (корзина) ---------- */
+  .drawer{
+    position:fixed;top:0;right:0;bottom:0;
+    width:min(480px,100%);
+    background:var(--paper);
+    z-index:160;
+    transform:translateX(100%);
+    transition:transform .5s var(--ease-out);
+    display:flex;flex-direction:column;
+    box-shadow:-30px 0 60px rgba(0,0,0,.15);
+  }
+  .drawer.show{transform:none}
+  .drawer-head{padding:22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);flex:0 0 auto}
+  .drawer-head h3{font-size:26px}
+  .drawer-close{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:transform .3s var(--ease-out), background .3s var(--ease-out)}
+  .drawer-close:hover{transform:scale(1.08) rotate(90deg);background:#fff}
+  .cart-items{padding:18px 22px;overflow:auto;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+  .cart-empty{color:var(--muted);font-size:13px;line-height:1.6;padding:26px 0}
+
+  /* Ровные цифры, аккуратная сетка */
+  .cart-item{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--line);
+  }
+  .cart-thumb{
+    width:72px;height:72px;flex:0 0 72px;border-radius:14px;
+    background:#e8ddd2 center/cover no-repeat;
+  }
+  .cart-info{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:3px}
+  .cart-name{
+    font-family:var(--serif);font-size:17px;line-height:1.15;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .cart-sub{
+    font-size:11px;color:var(--muted);line-height:1.3;
+    display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;
+  }
+  .cart-sub .cart-qty{
+    font-variant-numeric: tabular-nums;
+    color:var(--cocoa);
+    font-weight:600;
+  }
+  .cart-remove{
+    font-size:10px;color:var(--muted);margin-top:4px;
+    transition:color .25s var(--ease-out);
+    align-self:flex-start;
+    text-transform:uppercase;letter-spacing:.08em;
+  }
+  .cart-remove:hover{color:#b9554d}
+  .cart-price{
+    flex:0 0 auto;
+    font-size:13px;
+    font-variant-numeric: tabular-nums;
+    text-align:right;
+    min-width:72px;
+    align-self:center;
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  .drawer-foot{padding:22px;border-top:1px solid var(--line);flex:0 0 auto}
+  .sum-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:12px;margin-bottom:16px;
+  }
+  .sum-row span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .sum-total{
+    font-family:var(--serif);font-size:26px;
+    font-variant-numeric: tabular-nums;
+    margin-left:auto;
+    text-align:right;
+  }
+  .full-btn{width:100%}
+
+  .modal{
+    position:fixed;left:50%;top:50%;transform:translate(-50%,-46%) scale(.98);
+    width:min(760px,calc(100% - 28px));background:var(--paper);z-index:165;
+    border-radius:22px;box-shadow:0 40px 100px rgba(0,0,0,.22);
+    opacity:0;visibility:hidden;
+    transition:opacity .35s var(--ease-out), transform .35s var(--ease-out), visibility .35s;
+    max-height:90dvh;overflow:auto;
+  }
+  .modal.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+  .modal-head{padding:20px 22px;display:flex;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:2}
+  .modal-head h3{font-size:20px}
+  .modal-body{padding:22px}
+  .modal-product{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px}
+  .modal-photo{min-height:300px;border-radius:20px;overflow:hidden;position:relative;background:#e8ddd2}
+  .modal-info h2{font-size:42px;line-height:.95}
+  .modal-price{
+    font-family:var(--serif);font-size:26px;margin:10px 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .modal-info p{color:var(--muted);line-height:1.65;font-size:13px}
+  .modal-form{margin-top:20px;display:grid;gap:10px}
+  .field,.select{
+    width:100%;height:46px;padding:0 14px;border:1px solid var(--line);border-radius:12px;
+    outline:none;background:#fffdfa;color:var(--ink);font-size:12px;
+    -webkit-appearance:none;appearance:none;
+    transition:border-color .25s var(--ease-out), box-shadow .25s var(--ease-out);
+  }
+  .field:focus,.select:focus{border-color:var(--cocoa);box-shadow:0 0 0 3px rgba(76,45,37,.08)}
+  textarea.field{height:84px;padding:14px;resize:vertical}
+  .modal-form .btn{width:100%}
+
+  .mobile-menu{
+    position:fixed;top:0;right:0;bottom:0;left:auto;
+    width:min(480px,100%);
+    background:var(--paper);
+    z-index:155;
+    transform:translateX(100%);
+    transition:transform .5s var(--ease-out);
+    overflow:auto;
+    display:flex;flex-direction:column;
+    padding:22px;
+    box-shadow:-30px 0 60px rgba(0,0,0,.15);
+  }
+  .mobile-menu.show{transform:none}
+  .mobile-menu a{
+    display:block;font-family:var(--serif);font-size:34px;
+    padding:12px 0;border-bottom:1px solid var(--line);
+    transition:padding-left .3s var(--ease-out), color .3s var(--ease-out);
+  }
+  .mobile-menu a:hover{padding-left:6px;color:var(--cocoa)}
+  .mobile-menu .btn{margin-top:20px;width:100%}
+
+  .toast{
+    position:fixed;bottom:22px;left:50%;transform:translate(-50%,30px);z-index:190;
+    background:var(--cocoa);color:#fff;padding:12px 16px;border-radius:999px;font-size:11px;
+    opacity:0;pointer-events:none;box-shadow:0 15px 30px rgba(76,45,37,.22);
+    max-width:calc(100% - 32px);text-align:center;
+    transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  .reveal{
+    opacity:0;
+    transform:translateY(28px) scale(.97);
+    filter:blur(6px);
+    transition:opacity .9s var(--ease-out), transform .9s var(--ease-out), filter .9s var(--ease-out);
+    will-change:opacity, transform, filter;
+  }
+  .reveal.visible{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:blur(0);
+  }
+
+  .real-photo{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:center;
+  }
+  .photo-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(40,20,16,.02) 40%,rgba(40,20,16,.22));
+    pointer-events:none;
+  }
+  .product-media,.gallery-item,.review-photo,.about-photo{isolation:isolate}
+  .product-media .real-photo{z-index:0}
+  .product-media .product-badge,.product-media .favorite{z-index:2}
+  .photo-credit{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.5}
+
+  /* =========================================================
+     ADAPTIVE — планшет
+     ========================================================= */
+  @media (max-width:1100px){
+    .nav{gap:16px}
+    .hero-inner{grid-template-columns:1fr 1fr;padding:110px 0 50px;gap:26px}
+    .about-grid{grid-template-columns:1fr}
+    .delivery{grid-template-columns:1fr}
+    .products-grid{grid-template-columns:repeat(2,1fr)}
+    .gallery{grid-template-columns:1.2fr 1fr;grid-template-rows:240px 200px 200px}
+    .gallery-item:nth-child(1){grid-row:span 2}
+    .section{padding:72px 0}
+    .section-head{margin-bottom:28px}
+  }
+
+  @media (max-width:1000px){
+    .hero-inner{
+      grid-template-columns:1fr;
+      padding:calc(var(--header-h) + 26px) 0 44px;
+      gap:0;
+    }
+    .hero-copy{padding:0 20px;text-align:center;margin:0 auto;max-width:640px}
+    .eyebrow{justify-content:center}
+    .hero-lead{margin-left:auto;margin-right:auto}
+    .hero-cta{justify-content:center}
+    .hero-visual{display:none}
+
+    .products-grid{grid-template-columns:1fr;gap:12px}
+    .product-media{height:320px}
+  }
+
+  /* =========================================================
+     ADAPTIVE — мобильный
+     ========================================================= */
+  @media (max-width:820px){
+    :root{--header-h: 64px}
+
+    .nav,.header-actions .icon-btn.search-btn{display:none}
+    .menu-btn{display:grid}
+    .header-actions{margin-left:auto}
+
+    .header-wrap{
+      width:calc(100% - 20px);
+      margin-top:10px;
+      padding:8px 8px 8px 16px;
+      gap:10px;
+      border-radius:999px;
+      background:rgba(255,253,249,.86);
+      border-color:rgba(54,35,28,.08);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      box-shadow:0 8px 24px rgba(54,35,28,.08);
+    }
+    .site-header.scrolled .header-wrap{
+      background:rgba(255,253,249,.95);
+      box-shadow:0 12px 30px rgba(54,35,28,.12);
+    }
+    .brand-main{font-size:22px;letter-spacing:.2em}
+    .brand-sub{font-size:7px;margin-top:5px}
+    .icon-btn,.menu-btn{width:40px;height:40px}
+
+    .section{padding:56px 0}
+    .section-head{display:block;margin-bottom:24px}
+    .section-desc{margin-top:12px;max-width:100%}
+    .section-title{font-size:clamp(32px,8vw,46px)}
+
+    .catalog-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+    .catalog-filter{min-height:34px;padding:0 14px;font-size:10px;flex:0 0 auto}
+    .catalog-filter:first-child{min-height:40px;padding:0 18px;flex:1 1 100%}
+
+    .products-grid{grid-template-columns:1fr;gap:12px}
+    .product-media{height:280px}
+    .product-title{font-size:22px}
+    .product-price{font-size:20px}
+    .product-info{padding:14px}
+    .add-btn{height:38px;padding:0 12px;font-size:9.5px}
+
+    .builder-panel{padding:18px;border-radius:20px}
+    .builder-step{padding:14px 0}
+    .builder-label strong{font-size:18px}
+    .builder-label{margin-bottom:8px}
+    .option-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+    .option{padding:9px 10px;border-radius:11px}
+    .option b{font-size:10.5px}
+    .option span{font-size:9.5px;margin-top:2px}
+    .builder-actions{flex-direction:row;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+    .builder-actions .btn{width:auto;flex:1 1 auto;min-height:44px}
+    .builder-total{font-size:22px}
+
+    .gallery{
+      grid-template-columns:repeat(2,1fr);
+      grid-template-rows:180px 140px 140px;
+      gap:8px;
+    }
+    .gallery-item:nth-child(1){grid-row:span 1;grid-column:span 2}
+    .gallery-item:nth-child(2),.gallery-item:nth-child(3){grid-column:span 1}
+    .gallery-item:nth-child(4),.gallery-item:nth-child(5){grid-column:span 2}
+    .gallery-caption{font-size:9px;bottom:8px;left:8px;right:8px}
+
+    /* Отзывы: заголовок и стрелки в одну линию */
+    .reviews-head{
+      flex-direction:row;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+    }
+    .reviews-head .reviews-head-left{flex:1 1 auto;min-width:0}
+    .slider-controls{flex:0 0 auto}
+    .slider-btn{width:40px;height:40px}
+
+    .review-card{grid-template-columns:1fr;gap:14px;padding:14px 0}
+    .review-photo{min-height:200px}
+    .quote{font-size:clamp(22px,6vw,32px)}
+
+    .about-card{padding:24px 20px;min-height:auto}
+    .about-photo{min-height:240px}
+    .facts{grid-template-columns:repeat(3,1fr);margin-top:18px}
+    .fact b{font-size:22px}
+    .fact span{font-size:9px}
+
+    .delivery{grid-template-columns:1fr;gap:10px}
+    .delivery-card{min-height:auto;padding:18px}
+    .delivery-card h3{font-size:20px;margin:12px 0 6px}
+
+    .final-cta{padding:56px 20px}
+    .final-inner h2{font-size:clamp(34px,10vw,54px)}
+    .final-inner p{font-size:13px;margin:16px auto 22px}
+
+    .footer-grid{grid-template-columns:1fr 1fr;gap:18px}
+    .footer-brand{grid-column:span 2}
+    .footer-bottom{flex-direction:column;gap:6px;text-align:center}
+
+    /* Корзина 85% справа — аккуратные ровные цифры */
+    .drawer{
+      width:85vw;
+      max-width:85vw;
+      border-top-left-radius:20px;
+      border-bottom-left-radius:20px;
+    }
+    .drawer-head{padding:18px}
+    .drawer-head h3{font-size:22px}
+    .cart-items{padding:12px 16px}
+
+    .cart-item{
+      display:grid;
+      grid-template-columns:56px 1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:12px 0;
+    }
+    .cart-thumb{width:56px;height:56px;flex:0 0 56px;border-radius:10px}
+    .cart-info{min-width:0}
+    .cart-name{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cart-sub{font-size:10px;gap:4px}
+    .cart-remove{font-size:9px}
+    .cart-price{
+      font-size:13px;
+      min-width:64px;
+      text-align:right;
+      align-self:center;
+      font-variant-numeric: tabular-nums;
+      white-space:nowrap;
+    }
+
+    .drawer-foot{padding:16px}
+    .sum-total{font-size:22px}
+
+    .mobile-menu{
+      width:85vw;
+      max-width:85vw;
+      padding:24px 20px 20px;
+      border-top-left-radius:20px;
+      border-bottom-left-radius:20px;
+    }
+    .mobile-menu a{font-size:26px;padding:10px 0}
+    .mobile-menu .btn{min-height:46px;font-size:10px}
+
+    .modal{width:calc(100% - 24px);max-height:92dvh;border-radius:18px}
+    .modal-head{padding:16px 18px}
+    .modal-body{padding:18px}
+    .modal-product{grid-template-columns:1fr;gap:16px}
+    .modal-photo{min-height:200px}
+    .modal-info h2{font-size:30px}
+  }
+
+  /* =========================================================
+     ADAPTIVE — телефоны
+     ========================================================= */
+  @media (max-width:560px){
+    .section{padding:44px 0}
+    .container{width:calc(100% - 24px)}
+
+    .brand-main{font-size:20px}
+    .brand-sub{font-size:6.5px}
+
+    h1{font-size:clamp(36px,12vw,52px)}
+    .hero-lead{font-size:13px;line-height:1.55;margin:16px 0 22px}
+    .hero-cta .btn{flex:1 1 100%;min-width:0;min-height:46px}
+    .hero-inner{padding:calc(var(--header-h) + 22px) 0 36px}
+
+    .products-grid{grid-template-columns:1fr;gap:10px}
+    .product-media{height:240px}
+    .product-title{font-size:20px;margin:7px 0 4px}
+    .product-desc{font-size:11px;min-height:32px}
+    .product-price{font-size:18px}
+    .add-btn{height:36px;padding:0 12px;font-size:9.5px}
+    .product-info{padding:12px}
+    .product-meta{font-size:9px}
+
+    .catalog-filter{min-height:32px;padding:0 12px;font-size:9.5px}
+    .catalog-filter:first-child{min-height:38px}
+
+    .builder-panel{padding:14px}
+    .builder-step{padding:12px 0}
+    .builder-label strong{font-size:16px}
+    .option-grid{grid-template-columns:1fr 1fr}
+    .option{padding:8px 9px;border-radius:10px}
+    .option b{font-size:10px}
+    .option span{font-size:9px}
+    .builder-actions{margin-top:12px}
+    .builder-total{font-size:20px}
+    .builder-actions .btn{min-height:42px;font-size:10px;padding:0 16px}
+
+    .gallery{grid-template-columns:1fr;grid-template-rows:180px 130px 130px 130px 130px}
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(2),
+    .gallery-item:nth-child(3),
+    .gallery-item:nth-child(4),
+    .gallery-item:nth-child(5){grid-column:auto;grid-row:auto}
+
+    /* Отзывы: заголовок слева, стрелки справа */
+    .reviews-head{gap:10px;margin-bottom:14px}
+    .section-title{font-size:clamp(28px,8vw,40px)}
+    .slider-btn{width:36px;height:36px}
+
+    .about-card{padding:22px 16px}
+    .about-card h2{font-size:28px}
+    .about-card p{font-size:13px;line-height:1.65}
+    .about-photo{min-height:200px}
+    .facts{grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:16px}
+    .fact{padding:10px;border-top:1px solid var(--line)}
+    .fact b{font-size:20px}
+    .fact span{font-size:8.5px}
+
+    .delivery-card h3{font-size:19px}
+    .delivery-card p{font-size:11.5px}
+
+    .final-cta{padding:44px 18px}
+    .final-inner h2{font-size:clamp(30px,11vw,44px)}
+    .social-row a{width:34px;height:34px}
+
+    .footer-grid{grid-template-columns:1fr 1fr;gap:14px}
+    .footer-brand p{font-size:10px}
+    .footer-col a,.footer-col button{margin:6px 0}
+    .footer-bottom{margin-top:18px;padding-top:12px}
+
+    /* Корзина — ровная сетка */
+    .drawer{width:85vw;min-width:280px;max-width:85vw}
+    .drawer-head{padding:14px}
+    .drawer-head h3{font-size:20px}
+    .cart-items{padding:10px 14px}
+
+    .cart-item{
+      grid-template-columns:52px 1fr auto;
+      gap:10px;
+      padding:10px 0;
+    }
+    .cart-thumb{width:52px;height:52px;flex:0 0 52px;border-radius:10px}
+    .cart-name{font-size:14px}
+    .cart-sub{font-size:9.5px;gap:4px}
+    .cart-remove{font-size:9px}
+    .cart-price{
+      font-size:13px;
+      min-width:60px;
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .drawer-foot{padding:14px}
+    .sum-total{font-size:20px}
+    .full-btn{min-height:44px;font-size:10px}
+
+    .mobile-menu{
+      width:85vw;
+      min-width:280px;
+      max-width:85vw;
+      padding:20px 16px 18px;
+    }
+    .mobile-menu a{font-size:20px;padding:9px 0}
+    .mobile-menu .btn{min-height:44px;font-size:10px;margin-top:16px}
+
+    .modal{width:calc(100% - 16px);border-radius:14px}
+    .modal-head{padding:12px 14px}
+    .modal-head h3{font-size:17px}
+    .modal-body{padding:14px}
+    .modal-info h2{font-size:26px}
+    .modal-photo{min-height:170px}
+    .field,.select{height:42px;font-size:12px}
+    textarea.field{height:76px}
+  }
+
+  /* =========================================================
+     ADAPTIVE — очень узкие
+     ========================================================= */
+  @media (max-width:380px){
+    .facts{grid-template-columns:1fr 1fr}
+    .fact:nth-child(3){grid-column:span 2}
+    .drawer{width:88vw;min-width:260px;max-width:88vw}
+    .mobile-menu{width:88vw;min-width:260px;max-width:88vw}
+    .product-media{height:220px}
+    .section{padding:36px 0}
+
+    .reviews-head{gap:8px}
+    .slider-btn{width:34px;height:34px}
+  }
+
+  @media (max-height:520px) and (orientation:landscape){
+    .hero-inner{padding-top:calc(var(--header-h) + 16px)}
+    .hero-visual{display:none}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+    }
+    .reveal{opacity:1;transform:none;filter:none}
+  }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="site-header" id="header">
+  <div class="header-wrap">
+    <a href="#top" class="brand" aria-label="АМ ТОРТ">
+      <span class="brand-main">АМ ТОРТ</span>
+      <span class="brand-sub">desserts made for moments</span>
+    </a>
+
+    <nav class="nav">
+      <a href="#catalog">Каталог</a>
+      <a href="#constructor">Конструктор</a>
+      <a href="#about">О нас</a>
+      <a href="#delivery">Доставка</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn search-btn" id="searchBtn" aria-label="Поиск">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+      </button>
+      <button class="icon-btn cart-btn" id="cartBtn" aria-label="Корзина">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle><path d="M3 4h2l2.3 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.95-1.55L21 8H6"></path></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Открыть меню">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#catalog">Каталог</a>
+  <a href="#constructor">Конструктор</a>
+  <a href="#about">О нас</a>
+  <a href="#delivery">Доставка</a>
+  <a href="#reviews">Отзывы</a>
+  <a href="#contacts">Контакты</a>
+  <button class="btn btn-primary" id="mobileCartBtn">Открыть корзину</button>
+</div>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">Пермь · торты на заказ</div>
+        <h1>Не просто<br><em>торт.</em><br>Момент.</h1>
+        <p class="hero-lead">Создаём торты, бенто и десерты, которые хочется фотографировать, дарить и вспоминать. От готового варианта до полностью индивидуального дизайна.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#catalog">Смотреть каталог</a>
+          <a class="btn btn-secondary" href="#constructor">Создать свой торт</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="hero-glow"></div>
+        <img class="hero-photo" src="tort/hero.jpg" alt="Торт АМ ТОРТ">
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="catalog">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-kicker">Выберите формат</div>
+          <h2 class="section-title">Каталог</h2>
+        </div>
+        <p class="section-desc">Готовые решения для праздника, небольшого подарка или особенного повода. А ещё — возможность собрать десерт полностью под себя.</p>
+      </div>
+
+      <div class="catalog-filters reveal" id="catalogFilters">
+        <button class="catalog-filter active" data-filter="all">Все</button>
+        <button class="catalog-filter" data-filter="Торт">Торт</button>
+        <button class="catalog-filter" data-filter="Капкейки">Капкейки</button>
+        <button class="catalog-filter" data-filter="Пирожное">Пирожное</button>
+        <button class="catalog-filter" data-filter="Пряники">Пряники</button>
+      </div>
+
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section section-soft" id="constructor">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-kicker">Сделайте его своим</div>
+          <h2 class="section-title">Конструктор</h2>
+        </div>
+        <p class="section-desc">Соберите торт из базовых параметров. Стоимость пересчитывается сразу — без ожидания ответа в мессенджере.</p>
+      </div>
+
+      <div class="builder reveal">
+        <div class="builder-panel">
+          <div class="builder-step">
+            <div class="builder-label"><strong>Формат</strong><span>01</span></div>
+            <div class="option-grid">
+              <button class="option active" data-type="format" data-value="Бенто" data-add="0"><b>Бенто</b><span>400–500 г</span></button>
+              <button class="option" data-type="format" data-value="Стандарт" data-add="900"><b>Стандарт</b><span>1–1,5 кг</span></button>
+              <button class="option" data-type="format" data-value="Праздничный" data-add="1800"><b>Праздничный</b><span>2–3 кг</span></button>
+            </div>
+          </div>
+
+          <div class="builder-step">
+            <div class="builder-label"><strong>Вкус</strong><span>02</span></div>
+            <div class="option-grid">
+              <button class="option active" data-type="taste" data-value="Шоколад" data-add="0"><b>Шоколад</b><span>Насыщенный</span></button>
+              <button class="option" data-type="taste" data-value="Ваниль–ягоды" data-add="120"><b>Ваниль–ягоды</b><span>Нежный</span></button>
+              <button class="option" data-type="taste" data-value="Красный бархат" data-add="180"><b>Красный бархат</b><span>Сливочный</span></button>
+            </div>
+          </div>
+
+          <div class="builder-step">
+            <div class="builder-label"><strong>Оформление</strong><span>03</span></div>
+            <div class="option-grid">
+              <button class="option active" data-type="decor" data-value="Минимал" data-add="0"><b>Минимал</b><span>Чистый дизайн</span></button>
+              <button class="option" data-type="decor" data-value="Цветы" data-add="450"><b>Цветы</b><span>Нежный акцент</span></button>
+              <button class="option" data-type="decor" data-value="Праздник" data-add="650"><b>Праздник</b><span>Больше деталей</span></button>
+            </div>
+          </div>
+
+          <div class="builder-step">
+            <div class="builder-label"><strong>Надпись</strong><span>04</span></div>
+            <input class="field" id="builderMessage" placeholder="Например: С днём рождения!">
+            <p class="builder-note" style="margin-top:6px">Надпись сохранится с заказом. Длина уточняется при подтверждении.</p>
+          </div>
+
+          <div class="builder-actions">
+            <div><div class="builder-note">Предварительная стоимость</div><div class="builder-total" id="builderTotal">1 590 ₽</div></div>
+            <button class="btn btn-primary" id="builderCartBtn">Добавить в корзину</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-kicker">Наши работы</div>
+          <h2 class="section-title">Сделано<br>с любовью</h2>
+        </div>
+        <p class="section-desc">Фотографии, которыми хочется делиться. В дальнейшем этот блок можно подключить к реальному каталогу фотографий из админки.</p>
+      </div>
+      <div class="gallery reveal">
+        <div class="gallery-item"><img class="real-photo" src="tort/1.jpg" alt="Работа 1" loading="lazy"><div class="gallery-caption">Chocolate · custom cake</div></div>
+        <div class="gallery-item"><img class="real-photo" src="tort/2.jpg" alt="Работа 2" loading="lazy"><div class="gallery-caption">Bento · birthday</div></div>
+        <div class="gallery-item"><img class="real-photo" src="tort/3.jpg" alt="Работа 3" loading="lazy"><div class="gallery-caption">Cupcakes · set</div></div>
+        <div class="gallery-item"><img class="real-photo" src="tort/4.jpg" alt="Работа 4" loading="lazy"><div class="gallery-caption">Wedding · soft pink</div></div>
+        <div class="gallery-item"><img class="real-photo" src="tort/5.jpg" alt="Работа 5" loading="lazy"><div class="gallery-caption">Mochi · gift box</div></div>
+      </div>
+      <div class="photo-credit">Фотографии в прототипе взяты из публичных карточек АМ ТОРТ на внешних площадках и используются здесь как визуальная демонстрация. Для публикации рабочего сайта лучше загрузить оригиналы, предоставленные владельцем бизнеса.</div>
+    </div>
+  </section>
+
+  <section class="section section-soft" id="reviews">
+    <div class="container">
+      <div class="reviews-head reveal">
+        <div class="reviews-head-left">
+          <div class="section-kicker">Sweet words</div>
+          <h2 class="section-title">Отзывы<br>клиентов</h2>
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn" id="prevReview" aria-label="Назад">←</button>
+          <button class="slider-btn" id="nextReview" aria-label="Вперёд">→</button>
+        </div>
+      </div>
+
+      <div class="reviews-shell reveal">
+        <div class="review-slider" id="reviewSlider">
+          <article class="review-card">
+            <div class="review-photo"><img class="real-photo" src="tort/6.jpg" alt="Отзыв 1"></div>
+            <div class="review-content">
+              <div class="stars">★★★★★</div>
+              <div class="quote">«Торт получился даже красивее, чем я представляла. И самое главное — действительно вкусно.»</div>
+              <div class="review-author"><div><div class="author-name">Анна М.</div><div class="author-meta">Заказ на день рождения · Пермь</div></div></div>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-photo"><img class="real-photo" src="tort/7.jpg" alt="Отзыв 2"></div>
+            <div class="review-content">
+              <div class="stars">★★★★★</div>
+              <div class="quote">«Очень удобно, когда можно сразу выбрать оформление, дату и дополнительные детали. Бенто был готов вовремя.»</div>
+              <div class="review-author"><div><div class="author-name">Мила Р.</div><div class="author-meta">Бенто · подарок</div></div></div>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="review-photo"><img class="real-photo" src="tort/8.jpg" alt="Отзыв 3"></div>
+            <div class="review-content">
+              <div class="stars">★★★★★</div>
+              <div class="quote">«Заказывали большой торт для компании. Помогли собрать вкус и оформление, всё аккуратно упаковали.»</div>
+              <div class="review-author"><div><div class="author-name">Карина П.</div><div class="author-meta">Корпоративный заказ</div></div></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <div class="section-kicker">О бренде</div>
+          <h2>АМ ТОРТ —<br>это про вкус,<br>форму и момент.</h2>
+          <p>Мы создаём десерты на заказ в Перми — от небольшого бенто для близкого человека до больших тортов для праздников и корпоративных событий.</p>
+          <p>Задача бренда — делать заказ простым: понятный каталог, красивые примеры, честная информация и удобный способ связаться.</p>
+          <div class="facts">
+            <div class="fact"><b>4.5</b><span>рейтинг на Яндекс</span></div>
+            <div class="fact"><b>∞</b><span>идей для дизайна</span></div>
+            <div class="fact"><b>24/7</b><span>можно оставить заявку</span></div>
+          </div>
+        </div>
+        <div class="about-photo reveal"><img class="real-photo" src="tort/9.jpg" alt="Работа АМ ТОРТ"><div class="photo-overlay"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft" id="delivery">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-kicker">Понятно с первого раза</div>
+          <h2 class="section-title">Доставка<br>и заказ</h2>
+        </div>
+        <p class="section-desc">В реальной версии здесь можно вывести точные условия, тарифы, сроки и способы оплаты бизнеса.</p>
+      </div>
+
+      <div class="delivery reveal">
+        <article class="delivery-card"><div class="delivery-num">01 — САМОВЫВОЗ</div><h3>Заберите сами</h3><p>Выберите дату и удобное время. Адрес, график и подробности появятся на этапе оформления заказа.</p></article>
+        <article class="delivery-card"><div class="delivery-num">02 — ДОСТАВКА</div><h3>Привезём</h3><p>Укажите адрес при оформлении. Стоимость доставки можно рассчитывать по району или по километражу.</p></article>
+        <article class="delivery-card"><div class="delivery-num">03 — СРОЧНО</div><h3>Нужно сегодня?</h3><p>Для доступных позиций можно оставить срочную заявку — менеджер подтвердит наличие и время.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta" id="contacts">
+    <div class="final-inner reveal">
+      <div class="eyebrow">Это больше, чем просто десерт</div>
+      <h2>Сделаем что-то,<br>что запомнится?</h2>
+      <p>Выберите готовый десерт или расскажите, что вы задумали. Поможем превратить идею в красивый торт.</p>
+      <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+        <a href="#catalog" class="btn btn-light">Выбрать десерт</a>
+        <a href="#constructor" class="btn" style="border:1px solid rgba(255,255,255,.18);color:#fff">Создать свой торт</a>
+      </div>
+      <div class="social-row">
+        <a href="https://t.me/" target="_blank" rel="noopener">TG</a>
+        <a href="https://vk.com/" target="_blank" rel="noopener">VK</a>
+        <a href="tel:+70000000000">TEL</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-main">АМ ТОРТ</span><span class="brand-sub">desserts made for moments</span></div>
+        <p>Торты, бенто, капкейки и десерты на заказ в Перми. Макет подготовлен как современная база для полноценного сайта магазина.</p>
+      </div>
+      <div class="footer-col"><h4>Навигация</h4><a href="#catalog">Каталог</a><a href="#constructor">Конструктор</a><a href="#about">О нас</a><a href="#reviews">Отзывы</a></div>
+   
+    <div class="footer-bottom"><span>© 2026 АМ ТОРТ. by Sasha Antonov</span><span>Сделано с вниманием к деталям</span></div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="drawer" id="drawer" aria-label="Корзина">
+  <div class="drawer-head"><h3>Корзина</h3><button class="drawer-close" id="drawerClose">×</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="sum-row"><span>Итого</span><strong class="sum-total" id="cartTotal">0 ₽</strong></div>
+    <button class="btn btn-primary full-btn" id="checkoutBtn">Оформить заказ</button>
+  </div>
+</aside>
+
+<div class="modal" id="productModal" role="dialog" aria-modal="true">
+  <div class="modal-head"><h3>Оформление</h3><button class="drawer-close" id="modalClose">×</button></div>
+  <div class="modal-body" id="modalBody"></div>
+</div>
+
+<div class="modal" id="searchModal" role="dialog" aria-modal="true">
+  <div class="modal-head"><h3>Поиск по каталогу</h3><button class="drawer-close" id="searchClose">×</button></div>
+  <div class="modal-body">
+    <input class="field" id="searchInput" placeholder="Например: торт, шоколад, капкейки">
+    <div id="searchResults" style="margin-top:16px;display:grid;gap:8px"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Добавлено в корзину</div>
+
+<script>
+  const products = [
+    {id:1, category:'Торт', name:'Бенто «Маме»', price:1790, desc:'Нежный бисквит, ягодная начинка и крем-чиз. 400 г.', mood:['шоколад','праздник','любовь'], image:'tort/10.jpg', tone:'rose'},
+    {id:2, category:'Торт', name:'Красный бархат', price:3290, desc:'Мягкий красный бисквит, сливочный крем и ягодный акцент.', mood:['ягодный','красивое','праздник'], image:'tort/11.jpg', tone:'red'},
+    {id:3, category:'Капкейки', name:'Набор капкейков', price:2490, desc:'Набор для праздника с крем-чизом и декором.', mood:['праздник','красивое'], image:'tort/12.jpg', tone:'light'},
+    {id:4, category:'Пирожное', name:'Пирожное MIX', price:1440, desc:'Ассорти нежных пирожных с разными начинками.', mood:['нежный','красивое'], image:'tort/13.jpg', tone:'peach'},
+    {id:5, category:'Пряники', name:'Пряники расписные', price:1875, desc:'Персональный дизайн, набор расписных пряников.', mood:['любовь','праздник'], image:'tort/14.jpg', tone:'rose'},
+    {id:6, category:'Торт', name:'Бенто + капкейки', price:2625, desc:'Бенто-торт и капкейки — готовый сладкий подарок.', mood:['праздник','красивое'], image:'tort/15.jpg', tone:'light'}
+  ]
+
+  let cart = JSON.parse(localStorage.getItem('am_tort_cart') || '[]');
+  let currentFilter = 'all';
+
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+
+  function money(v){ return new Intl.NumberFormat('ru-RU').format(v) + ' ₽'; }
+
+  function productMarkup(p){
+    const tone = {
+      dark:'linear-gradient(145deg,#5e382d,#281614)',
+      rose:'linear-gradient(145deg,#e9c1bc,#c98789)',
+      light:'linear-gradient(145deg,#eadfd3,#fdf8f2)',
+      peach:'linear-gradient(145deg,#ead1bd,#b88e78)',
+      red:'linear-gradient(145deg,#7f4746,#331819)'
+    }[p.tone] || 'linear-gradient(145deg,#eadfd3,#fdf8f2)';
+    return `
+      <article class="product-card" data-category="${p.category}" data-name="${p.name.toLowerCase()}">
+        <div class="product-media" style="background:${tone}">
+          <img class="real-photo" src="${p.image}" alt="${p.name}" loading="lazy">
+          <div class="photo-overlay"></div>
+          <span class="product-badge">${p.category}</span>
+          <button class="favorite" aria-label="В избранное">♡</button>
+        </div>
+        <div class="product-info">
+          <div class="product-meta"><span>${p.category}</span><span>на заказ</span></div>
+          <div class="product-title">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-bottom">
+            <div class="product-price">${money(p.price)}</div>
+            <button class="add-btn" data-product="${p.id}">В корзину</button>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderProducts(){
+    const grid = $('#productsGrid');
+    let list = products.filter(p => {
+      if(currentFilter==='all') return true;
+      return p.category === currentFilter;
+    });
+    grid.innerHTML = list.map(productMarkup).join('');
+    $$('.add-btn', grid).forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      addToCart(Number(btn.dataset.product));
+    }));
+    $$('.product-card', grid).forEach(card => card.addEventListener('click', e => {
+      if(e.target.closest('.add-btn') || e.target.closest('.favorite')) return;
+      const p = products.find(x => x.name.toLowerCase() === card.dataset.name);
+      openProduct(p);
+    }));
+  }
+
+  function addToCart(productId, customData=null){
+    const p = products.find(x=>x.id===productId);
+    if(!p) return;
+    const price = customData?.price ?? p.price;
+    const name = customData?.name ?? p.name;
+    const existing = cart.find(x => x.key === productId + '|' + name);
+    if(existing){ existing.qty += 1; }
+    else cart.push({key:productId+'|'+name,id:productId,name,price,qty:1,meta:customData?.meta||'',image:p.image});
+    saveCart(); updateCart(); showToast('Добавлено в корзину');
+  }
+
+  function addCustomToCart(){
+    const format = $('.option.active[data-type="format"]')?.dataset.value || 'Бенто';
+    const taste = $('.option.active[data-type="taste"]')?.dataset.value || 'Шоколад';
+    const decor = $('.option.active[data-type="decor"]')?.dataset.value || 'Минимал';
+    const message = $('#builderMessage').value.trim();
+    const price = builderTotal;
+    const name = `Торт ${format} · ${taste}`;
+    const meta = `${decor}${message ? ' · «'+message+'»' : ''}`;
+    const key = 'custom|' + name + '|' + meta;
+    const existing = cart.find(x=>x.key===key);
+    if(existing) existing.qty += 1;
+    else cart.push({key,id:'custom',name,price,qty:1,meta,image:'tort/16.jpg'});
+    saveCart(); updateCart(); showToast('Ваш торт добавлен в корзину');
+  }
+
+  function saveCart(){ localStorage.setItem('am_tort_cart', JSON.stringify(cart)); }
+  function updateCart(){
+    const count = cart.reduce((a,b)=>a+b.qty,0);
+    $('#cartCount').textContent = count;
+    const items = $('#cartItems');
+    if(!cart.length){
+      items.innerHTML = '<div class="cart-empty">Корзина пока пустая.<br>Выберите десерт в каталоге или соберите свой торт в конструкторе.</div>';
+    } else {
+      items.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-thumb" style="background-image:url('${item.image || ""}')"></div>
+          <div class="cart-info">
+            <div class="cart-name">${item.name}</div>
+            <div class="cart-sub">
+              ${item.meta ? '<span>'+item.meta+'</span>' : '<span>1 позиция</span>'}
+              <span class="cart-qty">× ${item.qty}</span>
+            </div>
+            <button class="cart-remove" data-remove="${item.key}">Удалить</button>
+          </div>
+          <div class="cart-price">${money(item.price*item.qty)}</div>
+        </div>
+      `).join('');
+      $$('.cart-remove').forEach(btn => btn.addEventListener('click', ()=> {
+        cart = cart.filter(x=>x.key!==btn.dataset.remove);
+        saveCart(); updateCart();
+      }));
+    }
+    $('#cartTotal').textContent = money(cart.reduce((s,x)=>s+x.price*x.qty,0));
+  }
+
+  function openDrawer(){
+    $('#drawer').classList.add('show');
+    $('#overlay').classList.add('show');
+    document.body.classList.add('no-scroll');
+  }
+  function closeAll(){
+    $$('.drawer,.modal,.overlay,.mobile-menu').forEach(el=>el.classList.remove('show'));
+    document.body.classList.remove('no-scroll');
+  }
+  function openProduct(p){
+    $('#modalBody').innerHTML = `
+      <div class="modal-product">
+        <div class="modal-photo"><img class="real-photo" src="${p.image}" alt="${p.name}"></div>
+        <div class="modal-info">
+          <div class="section-kicker">${p.category}</div>
+          <h2>${p.name}</h2>
+          <div class="modal-price">${money(p.price)}</div>
+          <p>${p.desc}</p>
+          <div class="modal-form">
+            <select class="select" id="modalDate"><option>Выберите дату</option><option>Сегодня</option><option>Завтра</option><option>Другой день</option></select>
+            <input class="field" id="modalMessage" placeholder="Надпись на торте">
+            <button class="btn btn-primary" id="modalAdd">Добавить в корзину</button>
+          </div>
+        </div>
+      </div>
+    `;
+    $('#modalAdd').addEventListener('click', ()=>{
+      addToCart(p.id,{price:p.price,name:p.name,meta:$('#modalMessage').value.trim() ? 'Надпись: '+$('#modalMessage').value.trim() : 'Без надписи'});
+      closeAll();openDrawer();
+    });
+    $('#productModal').classList.add('show');$('#overlay').classList.add('show');document.body.classList.add('no-scroll');
+  }
+
+  function showToast(text){
+    const t = $('#toast');t.textContent=text;t.classList.add('show');
+    clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+  }
+
+  const header = $('#header'), progress = $('#progressBar');
+  window.addEventListener('scroll',()=>{
+    header.classList.toggle('scrolled', window.scrollY>25);
+    const h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    progress.style.width=(max ? window.scrollY/max*100 : 0)+'%';
+  },{passive:true});
+
+  $('#menuBtn').addEventListener('click',()=>{
+    $('#mobileMenu').classList.add('show');
+    $('#overlay').classList.add('show');
+    document.body.classList.add('no-scroll');
+  });
+  $$('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>closeAll()));
+  $('#mobileCartBtn').addEventListener('click',()=>{closeAll();openDrawer()});
+
+  $('#cartBtn').addEventListener('click',openDrawer);
+  $('#drawerClose').addEventListener('click',closeAll);
+  $('#modalClose').addEventListener('click',closeAll);
+  $('#searchClose').addEventListener('click',closeAll);
+  $('#overlay').addEventListener('click',closeAll);
+
+  $('#checkoutBtn').addEventListener('click',()=>{
+    if(!cart.length){showToast('Добавьте хотя бы один десерт');return;}
+    $('#modalBody').innerHTML = `
+      <div class="section-kicker">Оформление заказа</div>
+      <h2 style="font-size:clamp(26px,5.5vw,42px);line-height:.95">Почти готово.</h2>
+      <p style="color:var(--muted);margin-top:12px;line-height:1.65;font-size:13px">В реальной версии эта форма отправляет заказ в CRM/Telegram/WhatsApp и записывает его в базу.</p>
+      <div class="modal-form">
+        <input class="field" id="checkoutName" placeholder="Ваше имя">
+        <input class="field" id="checkoutPhone" placeholder="Телефон">
+        <select class="select"><option>Самовывоз</option><option>Доставка</option></select>
+        <input class="field" placeholder="Желаемая дата">
+        <input class="field" placeholder="Желаемое время">
+        <textarea class="field" placeholder="Комментарий к заказу"></textarea>
+        <button class="btn btn-primary" id="submitOrder">Отправить заявку</button>
+      </div>
+    `;
+    $('#submitOrder').addEventListener('click',()=>{
+      if(!$('#checkoutName').value.trim() || !$('#checkoutPhone').value.trim()){showToast('Заполните имя и телефон');return;}
+      cart=[];saveCart();updateCart();closeAll();showToast('Заявка отправлена. Менеджер свяжется с вами.');
+    });
+    $('#drawer').classList.remove('show');
+    $('#productModal').classList.add('show');$('#overlay').classList.add('show');
+  });
+
+  $$('.catalog-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('.catalog-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderProducts();
+    });
+  });
+
+  $('#searchBtn').addEventListener('click',()=>{
+    $('#searchModal').classList.add('show');$('#overlay').classList.add('show');document.body.classList.add('no-scroll');
+    setTimeout(()=>$('#searchInput').focus(),150);
+    renderSearch('');
+  });
+  function renderSearch(q){
+    const results=$('#searchResults');
+    const filtered=products.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())||p.category.toLowerCase().includes(q.toLowerCase())||p.desc.toLowerCase().includes(q.toLowerCase()));
+    results.innerHTML=filtered.length ? filtered.map(p=>`<button class="option" data-search-id="${p.id}" style="text-align:left"><b>${p.name}</b><span>${p.category} · ${money(p.price)}</span></button>`).join('') : '<div style="color:var(--muted);font-size:12px">Ничего не нашли. Попробуйте другое слово.</div>';
+    $$('[data-search-id]').forEach(b=>b.addEventListener('click',()=>{
+      const p=products.find(x=>x.id===Number(b.dataset.searchId));closeAll();openProduct(p);
+    }));
+  }
+  $('#searchInput').addEventListener('input',e=>renderSearch(e.target.value));
+
+  let builderTotal=1590;
+  const basePrice=1590;
+  const builderState={format:'Бенто',taste:'Шоколад',decor:'Минимал'};
+  $$('.option').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const type=btn.dataset.type;
+      if(!type)return;
+      $$(`.option[data-type="${type}"]`).forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+      builderState[type]=btn.dataset.value;
+      recalcBuilder();
+    });
+  });
+  $('#builderMessage').addEventListener('input',()=>{
+    const el = $('#previewCake');
+    if(el) el.dataset.message=$('#builderMessage').value.slice(0,28);
+  });
+  function recalcBuilder(){
+    let add=0;
+    $$('.option.active').forEach(x=>{add += Number(x.dataset.add||0)});
+    builderTotal=basePrice+add;
+    $('#builderTotal').textContent=money(builderTotal);
+  }
+  $('#builderCartBtn').addEventListener('click',addCustomToCart);
+
+  let reviewIndex=0;
+  const slider=$('#reviewSlider');
+  function moveReview(dir){
+    const total=$$('.review-card',slider).length;
+    reviewIndex=(reviewIndex+dir+total)%total;
+    slider.style.transform=`translateX(-${reviewIndex*100}%)`;
+  }
+  $('#nextReview').addEventListener('click',()=>moveReview(1));
+  $('#prevReview').addEventListener('click',()=>moveReview(-1));
+
+  document.addEventListener('click',e=>{
+    if(e.target.closest('.favorite')) {
+      const b=e.target.closest('.favorite');
+      b.textContent=b.textContent==='♡'?'♥':'♡';
+      showToast(b.textContent==='♥'?'Добавлено в избранное':'Убрано из избранного');
+    }
+  });
+
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}});
+  },{threshold:.12});
+  $$('.reveal').forEach(el=>observer.observe(el));
+
+  renderProducts();
+  updateCart();
+  recalcBuilder();
+</script>
+</body>
+</html>
