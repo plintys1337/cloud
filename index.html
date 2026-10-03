@@ -142,7 +142,6 @@
   .btn-secondary{border:1px solid rgba(76,45,37,.22);background:rgba(255,255,255,.26)}
   .btn-secondary:hover{transform:translateY(-3px) scale(1.03);background:#fff;box-shadow:0 18px 30px rgba(76,45,37,.12)}
 
-  /* ---- Hero photo — прямо, без наклона и анимации ---- */
   .hero-visual{position:relative;display:grid;place-items:center}
   .hero-glow{
     position:absolute;width:520px;height:520px;border-radius:50%;
@@ -173,11 +172,17 @@
   .section-title{font-size:clamp(38px,5vw,70px);line-height:.95;letter-spacing:-.04em}
   .section-desc{max-width:420px;color:var(--muted);font-size:14px;line-height:1.7}
 
-  /* Catalog filters */
-  .catalog-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  /* Catalog filters — теперь все кнопки одинаковые */
+  .catalog-filters{
+    display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;
+  }
   .catalog-filter{
-    min-height:38px;padding:0 18px;border-radius:999px;
-    border:1px solid var(--line);background:rgba(255,255,255,.5);
+    flex:1 1 auto;
+    min-height:44px;
+    padding:0 16px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.5);
     font-size:11px;text-transform:uppercase;letter-spacing:.08em;
     display:inline-flex;align-items:center;justify-content:center;
     transition:background .3s var(--ease-out), color .3s var(--ease-out),
@@ -190,7 +195,6 @@
     background:var(--cocoa);color:#fff;border-color:var(--cocoa);
     box-shadow:0 10px 22px rgba(76,45,37,.22);
   }
-  .catalog-filter:first-child{min-height:46px;padding:0 24px;font-weight:600}
 
   /* Products */
   .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -220,9 +224,11 @@
   .favorite{
     position:absolute;right:14px;top:14px;width:34px;height:34px;border-radius:50%;
     background:rgba(255,255,255,.74);border:1px solid rgba(54,35,28,.08);z-index:2;
-    transition:transform .3s var(--ease-out), background .3s var(--ease-out);
+    transition:transform .3s var(--ease-out), background .3s var(--ease-out), color .3s var(--ease-out);
+    display:grid;place-items:center;font-size:15px;line-height:1;color:#4a3b36;
   }
   .favorite:hover{transform:scale(1.1);background:#fff}
+  .favorite.active{color:#c2544b}
   .product-info{padding:16px}
   .product-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
   .product-title{font-family:var(--serif);font-size:26px;margin:9px 0 6px}
@@ -295,7 +301,6 @@
   .author-name{font-size:11px;text-transform:uppercase;letter-spacing:.08em}
   .author-meta{font-size:10px;color:var(--muted);margin-top:4px}
 
-  /* Заголовок отзывов + стрелки напротив слов */
   .reviews-head{
     display:flex;align-items:center;justify-content:space-between;gap:24px;
     margin-bottom:28px;
@@ -372,7 +377,6 @@
   .overlay{position:fixed;inset:0;background:rgba(29,16,14,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s var(--ease-out), visibility .35s;z-index:150}
   .overlay.show{opacity:1;visibility:visible}
 
-  /* ---------- DRAWER (корзина) ---------- */
   .drawer{
     position:fixed;top:0;right:0;bottom:0;
     width:min(480px,100%);
@@ -391,7 +395,6 @@
   .cart-items{padding:18px 22px;overflow:auto;flex:1 1 auto;-webkit-overflow-scrolling:touch}
   .cart-empty{color:var(--muted);font-size:13px;line-height:1.6;padding:26px 0}
 
-  /* Ровные цифры, аккуратная сетка */
   .cart-item{
     display:flex;align-items:center;gap:12px;
     padding:14px 0;border-bottom:1px solid var(--line);
@@ -600,9 +603,9 @@
     .section-desc{margin-top:12px;max-width:100%}
     .section-title{font-size:clamp(32px,8vw,46px)}
 
-    .catalog-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-    .catalog-filter{min-height:34px;padding:0 14px;font-size:10px;flex:0 0 auto}
-    .catalog-filter:first-child{min-height:40px;padding:0 18px;flex:1 1 100%}
+    /* Фильтры — все кнопки одинаковые */
+    .catalog-filters{gap:6px;margin-bottom:18px}
+    .catalog-filter{min-height:40px;padding:0 14px;font-size:10px}
 
     .products-grid{grid-template-columns:1fr;gap:12px}
     .product-media{height:280px}
@@ -633,7 +636,6 @@
     .gallery-item:nth-child(4),.gallery-item:nth-child(5){grid-column:span 2}
     .gallery-caption{font-size:9px;bottom:8px;left:8px;right:8px}
 
-    /* Отзывы: заголовок и стрелки в одну линию */
     .reviews-head{
       flex-direction:row;
       align-items:center;
@@ -667,7 +669,6 @@
     .footer-brand{grid-column:span 2}
     .footer-bottom{flex-direction:column;gap:6px;text-align:center}
 
-    /* Корзина 85% справа — аккуратные ровные цифры */
     .drawer{
       width:85vw;
       max-width:85vw;
@@ -744,8 +745,7 @@
     .product-info{padding:12px}
     .product-meta{font-size:9px}
 
-    .catalog-filter{min-height:32px;padding:0 12px;font-size:9.5px}
-    .catalog-filter:first-child{min-height:38px}
+    .catalog-filter{min-height:38px;padding:0 12px;font-size:9.5px}
 
     .builder-panel{padding:14px}
     .builder-step{padding:12px 0}
@@ -765,7 +765,6 @@
     .gallery-item:nth-child(4),
     .gallery-item:nth-child(5){grid-column:auto;grid-row:auto}
 
-    /* Отзывы: заголовок слева, стрелки справа */
     .reviews-head{gap:10px;margin-bottom:14px}
     .section-title{font-size:clamp(28px,8vw,40px)}
     .slider-btn{width:36px;height:36px}
@@ -791,7 +790,6 @@
     .footer-col a,.footer-col button{margin:6px 0}
     .footer-bottom{margin-top:18px;padding-top:12px}
 
-    /* Корзина — ровная сетка */
     .drawer{width:85vw;min-width:280px;max-width:85vw}
     .drawer-head{padding:14px}
     .drawer-head h3{font-size:20px}
@@ -994,7 +992,8 @@
           <div class="builder-step">
             <div class="builder-label"><strong>Надпись</strong><span>04</span></div>
             <input class="field" id="builderMessage" placeholder="Например: С днём рождения!">
-            <p class="builder-note" style="margin-top:6px">Надпись сохранится с заказом. Длина уточняется при подтверждении.</p>
+            <div class="builder-note" id="previewCake" style="margin-top:6px"></div>
+            <p class="builder-note" style="margin-top:4px">Надпись сохранится с заказом. Длина уточняется при подтверждении.</p>
           </div>
 
           <div class="builder-actions">
@@ -1175,12 +1174,14 @@
   ]
 
   let cart = JSON.parse(localStorage.getItem('am_tort_cart') || '[]');
+  let favorites = JSON.parse(localStorage.getItem('am_tort_favs') || '[]');
   let currentFilter = 'all';
 
   const $ = (s, root=document) => root.querySelector(s);
   const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 
   function money(v){ return new Intl.NumberFormat('ru-RU').format(v) + ' ₽'; }
+  function saveFavs(){ localStorage.setItem('am_tort_favs', JSON.stringify(favorites)); }
 
   function productMarkup(p){
     const tone = {
@@ -1190,13 +1191,14 @@
       peach:'linear-gradient(145deg,#ead1bd,#b88e78)',
       red:'linear-gradient(145deg,#7f4746,#331819)'
     }[p.tone] || 'linear-gradient(145deg,#eadfd3,#fdf8f2)';
+    const isFav = favorites.includes(p.id);
     return `
-      <article class="product-card" data-category="${p.category}" data-name="${p.name.toLowerCase()}">
+      <article class="product-card" data-id="${p.id}" data-category="${p.category}">
         <div class="product-media" style="background:${tone}">
           <img class="real-photo" src="${p.image}" alt="${p.name}" loading="lazy">
           <div class="photo-overlay"></div>
           <span class="product-badge">${p.category}</span>
-          <button class="favorite" aria-label="В избранное">♡</button>
+          <button class="favorite${isFav ? ' active' : ''}" data-fav="${p.id}" aria-label="В избранное">${isFav ? '♥' : '♡'}</button>
         </div>
         <div class="product-info">
           <div class="product-meta"><span>${p.category}</span><span>на заказ</span></div>
@@ -1218,14 +1220,34 @@
       return p.category === currentFilter;
     });
     grid.innerHTML = list.map(productMarkup).join('');
+
     $$('.add-btn', grid).forEach(btn => btn.addEventListener('click', e => {
       e.stopPropagation();
       addToCart(Number(btn.dataset.product));
     }));
+
+    $$('.favorite', grid).forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = Number(btn.dataset.fav);
+      const i = favorites.indexOf(id);
+      if(i === -1){
+        favorites.push(id);
+        btn.textContent = '♥';
+        btn.classList.add('active');
+        showToast('Добавлено в избранное');
+      } else {
+        favorites.splice(i, 1);
+        btn.textContent = '♡';
+        btn.classList.remove('active');
+        showToast('Убрано из избранного');
+      }
+      saveFavs();
+    }));
+
     $$('.product-card', grid).forEach(card => card.addEventListener('click', e => {
       if(e.target.closest('.add-btn') || e.target.closest('.favorite')) return;
-      const p = products.find(x => x.name.toLowerCase() === card.dataset.name);
-      openProduct(p);
+      const p = products.find(x => x.id === Number(card.dataset.id));
+      if(p) openProduct(p);
     }));
   }
 
@@ -1405,9 +1427,9 @@
       recalcBuilder();
     });
   });
-  $('#builderMessage').addEventListener('input',()=>{
+  $('#builderMessage').addEventListener('input', e => {
     const el = $('#previewCake');
-    if(el) el.dataset.message=$('#builderMessage').value.slice(0,28);
+    if(el) el.textContent = e.target.value.trim() ? 'Надпись: «' + e.target.value.trim() + '»' : '';
   });
   function recalcBuilder(){
     let add=0;
@@ -1426,14 +1448,6 @@
   }
   $('#nextReview').addEventListener('click',()=>moveReview(1));
   $('#prevReview').addEventListener('click',()=>moveReview(-1));
-
-  document.addEventListener('click',e=>{
-    if(e.target.closest('.favorite')) {
-      const b=e.target.closest('.favorite');
-      b.textContent=b.textContent==='♡'?'♥':'♡';
-      showToast(b.textContent==='♥'?'Добавлено в избранное':'Убрано из избранного');
-    }
-  });
 
   const observer=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}});
