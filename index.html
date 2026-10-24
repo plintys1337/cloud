@@ -172,7 +172,7 @@
   .section-title{font-size:clamp(38px,5vw,70px);line-height:.95;letter-spacing:-.04em}
   .section-desc{max-width:420px;color:var(--muted);font-size:14px;line-height:1.7}
 
-  /* Catalog filters — теперь все кнопки одинаковые */
+  /* Catalog filters */
   .catalog-filters{
     display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;
   }
@@ -244,36 +244,6 @@
     transition:transform .3s var(--ease-out), background .3s var(--ease-out);
   }
   .add-btn:hover{transform:scale(1.05);background:#3d241f}
-
-  /* Constructor */
-  .builder{display:grid;grid-template-columns:1fr;gap:14px}
-  .builder-panel{
-    border-radius:24px;overflow:hidden;background:var(--paper);
-    border:1px solid rgba(54,35,28,.08);
-    padding:24px;width:100%;
-  }
-  .builder-step{padding:16px 0;border-bottom:1px solid var(--line)}
-  .builder-step:first-child{padding-top:0}
-  .builder-step:last-of-type{border-bottom:0}
-  .builder-label{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-  .builder-label strong{font-family:var(--serif);font-size:21px;font-weight:500}
-  .builder-label span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-  .option-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .option{
-    padding:10px 12px;border:1px solid var(--line);border-radius:12px;text-align:left;
-    background:#fffdfa;
-    transition:border-color .3s var(--ease-out), box-shadow .3s var(--ease-out), transform .3s var(--ease-out);
-  }
-  .option:hover{transform:translateY(-2px);border-color:rgba(76,45,37,.35)}
-  .option.active{
-    border-color:var(--cocoa);
-    box-shadow:inset 0 0 0 1px var(--cocoa), 0 8px 20px rgba(76,45,37,.12);
-  }
-  .option b{display:block;font-size:11px}
-  .option span{display:block;margin-top:3px;font-size:10px;color:var(--muted)}
-  .builder-note{color:var(--muted);font-size:11px;line-height:1.5}
-  .builder-actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:16px;flex-wrap:wrap}
-  .builder-total{font-family:var(--serif);font-size:26px;font-variant-numeric: tabular-nums}
 
   /* Gallery */
   .gallery{display:grid;grid-template-columns:1.2fr .8fr .8fr;grid-template-rows:280px 220px;gap:12px}
@@ -538,6 +508,44 @@
   .photo-credit{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.5}
 
   /* =========================================================
+     V2 — ЦИФРЫ, ПАГИНАЦИЯ СЛАЙДЕРА
+     ========================================================= */
+
+  /* Все цифры — обычным (sans) шрифтом */
+  .product-price,
+  .sum-total,
+  .modal-price,
+  .fact b{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -.01em;
+  }
+
+  /* ---------- Пагинация слайдера отзывов ---------- */
+  .reviews-progress{
+    display:flex;align-items:center;justify-content:center;gap:18px;
+    margin-top:26px;flex-wrap:wrap;
+  }
+  .review-dots{display:flex;align-items:center;gap:8px}
+  .review-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(76,45,37,.22);
+    transition:width .35s var(--ease-out), background .35s var(--ease-out),
+               border-radius .35s var(--ease-out);
+  }
+  .review-dot.active{width:26px;border-radius:99px;background:var(--cocoa)}
+  .review-counter{
+    font-size:11px;letter-spacing:.12em;color:var(--muted);
+    font-variant-numeric: tabular-nums;font-weight:600;
+  }
+  .review-counter span{color:var(--ink);font-weight:700}
+
+  @media (max-width:560px){
+    .reviews-progress{margin-top:20px;gap:14px}
+  }
+
+  /* =========================================================
      ADAPTIVE — планшет
      ========================================================= */
   @media (max-width:1100px){
@@ -603,7 +611,6 @@
     .section-desc{margin-top:12px;max-width:100%}
     .section-title{font-size:clamp(32px,8vw,46px)}
 
-    /* Фильтры — все кнопки одинаковые */
     .catalog-filters{gap:6px;margin-bottom:18px}
     .catalog-filter{min-height:40px;padding:0 14px;font-size:10px}
 
@@ -613,18 +620,6 @@
     .product-price{font-size:20px}
     .product-info{padding:14px}
     .add-btn{height:38px;padding:0 12px;font-size:9.5px}
-
-    .builder-panel{padding:18px;border-radius:20px}
-    .builder-step{padding:14px 0}
-    .builder-label strong{font-size:18px}
-    .builder-label{margin-bottom:8px}
-    .option-grid{grid-template-columns:repeat(2,1fr);gap:6px}
-    .option{padding:9px 10px;border-radius:11px}
-    .option b{font-size:10.5px}
-    .option span{font-size:9.5px;margin-top:2px}
-    .builder-actions{flex-direction:row;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
-    .builder-actions .btn{width:auto;flex:1 1 auto;min-height:44px}
-    .builder-total{font-size:22px}
 
     .gallery{
       grid-template-columns:repeat(2,1fr);
@@ -747,17 +742,6 @@
 
     .catalog-filter{min-height:38px;padding:0 12px;font-size:9.5px}
 
-    .builder-panel{padding:14px}
-    .builder-step{padding:12px 0}
-    .builder-label strong{font-size:16px}
-    .option-grid{grid-template-columns:1fr 1fr}
-    .option{padding:8px 9px;border-radius:10px}
-    .option b{font-size:10px}
-    .option span{font-size:9px}
-    .builder-actions{margin-top:12px}
-    .builder-total{font-size:20px}
-    .builder-actions .btn{min-height:42px;font-size:10px;padding:0 16px}
-
     .gallery{grid-template-columns:1fr;grid-template-rows:180px 130px 130px 130px 130px}
     .gallery-item:nth-child(1),
     .gallery-item:nth-child(2),
@@ -876,7 +860,6 @@
 
     <nav class="nav">
       <a href="#catalog">Каталог</a>
-      <a href="#constructor">Конструктор</a>
       <a href="#about">О нас</a>
       <a href="#delivery">Доставка</a>
       <a href="#reviews">Отзывы</a>
@@ -900,7 +883,6 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#catalog">Каталог</a>
-  <a href="#constructor">Конструктор</a>
   <a href="#about">О нас</a>
   <a href="#delivery">Доставка</a>
   <a href="#reviews">Отзывы</a>
@@ -917,7 +899,6 @@
         <p class="hero-lead">Создаём торты, бенто и десерты, которые хочется фотографировать, дарить и вспоминать. От готового варианта до полностью индивидуального дизайна.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#catalog">Смотреть каталог</a>
-          <a class="btn btn-secondary" href="#constructor">Создать свой торт</a>
         </div>
       </div>
 
@@ -947,61 +928,6 @@
       </div>
 
       <div class="products-grid" id="productsGrid"></div>
-    </div>
-  </section>
-
-  <section class="section section-soft" id="constructor">
-    <div class="container">
-      <div class="section-head reveal">
-        <div>
-          <div class="section-kicker">Сделайте его своим</div>
-          <h2 class="section-title">Конструктор</h2>
-        </div>
-        <p class="section-desc">Соберите торт из базовых параметров. Стоимость пересчитывается сразу — без ожидания ответа в мессенджере.</p>
-      </div>
-
-      <div class="builder reveal">
-        <div class="builder-panel">
-          <div class="builder-step">
-            <div class="builder-label"><strong>Формат</strong><span>01</span></div>
-            <div class="option-grid">
-              <button class="option active" data-type="format" data-value="Бенто" data-add="0"><b>Бенто</b><span>400–500 г</span></button>
-              <button class="option" data-type="format" data-value="Стандарт" data-add="900"><b>Стандарт</b><span>1–1,5 кг</span></button>
-              <button class="option" data-type="format" data-value="Праздничный" data-add="1800"><b>Праздничный</b><span>2–3 кг</span></button>
-            </div>
-          </div>
-
-          <div class="builder-step">
-            <div class="builder-label"><strong>Вкус</strong><span>02</span></div>
-            <div class="option-grid">
-              <button class="option active" data-type="taste" data-value="Шоколад" data-add="0"><b>Шоколад</b><span>Насыщенный</span></button>
-              <button class="option" data-type="taste" data-value="Ваниль–ягоды" data-add="120"><b>Ваниль–ягоды</b><span>Нежный</span></button>
-              <button class="option" data-type="taste" data-value="Красный бархат" data-add="180"><b>Красный бархат</b><span>Сливочный</span></button>
-            </div>
-          </div>
-
-          <div class="builder-step">
-            <div class="builder-label"><strong>Оформление</strong><span>03</span></div>
-            <div class="option-grid">
-              <button class="option active" data-type="decor" data-value="Минимал" data-add="0"><b>Минимал</b><span>Чистый дизайн</span></button>
-              <button class="option" data-type="decor" data-value="Цветы" data-add="450"><b>Цветы</b><span>Нежный акцент</span></button>
-              <button class="option" data-type="decor" data-value="Праздник" data-add="650"><b>Праздник</b><span>Больше деталей</span></button>
-            </div>
-          </div>
-
-          <div class="builder-step">
-            <div class="builder-label"><strong>Надпись</strong><span>04</span></div>
-            <input class="field" id="builderMessage" placeholder="Например: С днём рождения!">
-            <div class="builder-note" id="previewCake" style="margin-top:6px"></div>
-            <p class="builder-note" style="margin-top:4px">Надпись сохранится с заказом. Длина уточняется при подтверждении.</p>
-          </div>
-
-          <div class="builder-actions">
-            <div><div class="builder-note">Предварительная стоимость</div><div class="builder-total" id="builderTotal">1 590 ₽</div></div>
-            <button class="btn btn-primary" id="builderCartBtn">Добавить в корзину</button>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1066,6 +992,11 @@
           </article>
         </div>
       </div>
+
+      <div class="reviews-progress reveal">
+        <div class="review-dots" id="reviewDots"></div>
+        <div class="review-counter"><span id="reviewCurrent">1</span> / <span id="reviewTotal">3</span></div>
+      </div>
     </div>
   </section>
 
@@ -1113,7 +1044,6 @@
       <p>Выберите готовый десерт или расскажите, что вы задумали. Поможем превратить идею в красивый торт.</p>
       <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
         <a href="#catalog" class="btn btn-light">Выбрать десерт</a>
-        <a href="#constructor" class="btn" style="border:1px solid rgba(255,255,255,.18);color:#fff">Создать свой торт</a>
       </div>
       <div class="social-row">
         <a href="https://t.me/" target="_blank" rel="noopener">TG</a>
@@ -1131,8 +1061,8 @@
         <div class="brand"><span class="brand-main">АМ ТОРТ</span><span class="brand-sub">desserts made for moments</span></div>
         <p>Торты, бенто, капкейки и десерты на заказ в Перми. Макет подготовлен как современная база для полноценного сайта магазина.</p>
       </div>
-      <div class="footer-col"><h4>Навигация</h4><a href="#catalog">Каталог</a><a href="#constructor">Конструктор</a><a href="#about">О нас</a><a href="#reviews">Отзывы</a></div>
-   
+      <div class="footer-col"><h4>Навигация</h4><a href="#catalog">Каталог</a><a href="#about">О нас</a><a href="#reviews">Отзывы</a></div>
+    </div>
     <div class="footer-bottom"><span>© 2026 АМ ТОРТ. by Sasha Antonov</span><span>Сделано с вниманием к деталям</span></div>
   </div>
 </footer>
@@ -1171,7 +1101,7 @@
     {id:4, category:'Пирожное', name:'Пирожное MIX', price:1440, desc:'Ассорти нежных пирожных с разными начинками.', mood:['нежный','красивое'], image:'tort/13.jpg', tone:'peach'},
     {id:5, category:'Пряники', name:'Пряники расписные', price:1875, desc:'Персональный дизайн, набор расписных пряников.', mood:['любовь','праздник'], image:'tort/14.jpg', tone:'rose'},
     {id:6, category:'Торт', name:'Бенто + капкейки', price:2625, desc:'Бенто-торт и капкейки — готовый сладкий подарок.', mood:['праздник','красивое'], image:'tort/15.jpg', tone:'light'}
-  ]
+  ];
 
   let cart = JSON.parse(localStorage.getItem('am_tort_cart') || '[]');
   let favorites = JSON.parse(localStorage.getItem('am_tort_favs') || '[]');
@@ -1262,28 +1192,13 @@
     saveCart(); updateCart(); showToast('Добавлено в корзину');
   }
 
-  function addCustomToCart(){
-    const format = $('.option.active[data-type="format"]')?.dataset.value || 'Бенто';
-    const taste = $('.option.active[data-type="taste"]')?.dataset.value || 'Шоколад';
-    const decor = $('.option.active[data-type="decor"]')?.dataset.value || 'Минимал';
-    const message = $('#builderMessage').value.trim();
-    const price = builderTotal;
-    const name = `Торт ${format} · ${taste}`;
-    const meta = `${decor}${message ? ' · «'+message+'»' : ''}`;
-    const key = 'custom|' + name + '|' + meta;
-    const existing = cart.find(x=>x.key===key);
-    if(existing) existing.qty += 1;
-    else cart.push({key,id:'custom',name,price,qty:1,meta,image:'tort/16.jpg'});
-    saveCart(); updateCart(); showToast('Ваш торт добавлен в корзину');
-  }
-
   function saveCart(){ localStorage.setItem('am_tort_cart', JSON.stringify(cart)); }
   function updateCart(){
     const count = cart.reduce((a,b)=>a+b.qty,0);
     $('#cartCount').textContent = count;
     const items = $('#cartItems');
     if(!cart.length){
-      items.innerHTML = '<div class="cart-empty">Корзина пока пустая.<br>Выберите десерт в каталоге или соберите свой торт в конструкторе.</div>';
+      items.innerHTML = '<div class="cart-empty">Корзина пока пустая.<br>Выберите десерт в каталоге.</div>';
     } else {
       items.innerHTML = cart.map(item => `
         <div class="cart-item">
@@ -1414,49 +1329,80 @@
   }
   $('#searchInput').addEventListener('input',e=>renderSearch(e.target.value));
 
-  let builderTotal=1590;
-  const basePrice=1590;
-  const builderState={format:'Бенто',taste:'Шоколад',decor:'Минимал'};
-  $$('.option').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const type=btn.dataset.type;
-      if(!type)return;
-      $$(`.option[data-type="${type}"]`).forEach(x=>x.classList.remove('active'));
-      btn.classList.add('active');
-      builderState[type]=btn.dataset.value;
-      recalcBuilder();
+  /* =========================================================
+     СЛАЙДЕР ОТЗЫВОВ — точки, счётчик, свайп
+     ========================================================= */
+  const slider = document.getElementById('reviewSlider');
+  const reviewCards = slider ? slider.querySelectorAll('.review-card') : [];
+  const reviewTotalCount = reviewCards.length;
+  let reviewIndex = 0;
+
+  const dotsContainer = document.getElementById('reviewDots');
+  const counterCurrent = document.getElementById('reviewCurrent');
+  const counterTotal = document.getElementById('reviewTotal');
+
+  if(counterTotal) counterTotal.textContent = reviewTotalCount;
+
+  if(dotsContainer){
+    for(let i=0;i<reviewTotalCount;i++){
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'review-dot' + (i===0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Отзыв ${i+1}`);
+      dot.addEventListener('click', () => goToReview(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function goToReview(i){
+    if(!slider || !reviewTotalCount) return;
+    reviewIndex = ((i % reviewTotalCount) + reviewTotalCount) % reviewTotalCount;
+    slider.style.transform = `translateX(-${reviewIndex * 100}%)`;
+    document.querySelectorAll('.review-dot').forEach((d, idx) => d.classList.toggle('active', idx === reviewIndex));
+    if(counterCurrent) counterCurrent.textContent = reviewIndex + 1;
+  }
+  function moveReview(dir){ goToReview(reviewIndex + dir); }
+
+  document.getElementById('nextReview')?.addEventListener('click', () => moveReview(1));
+  document.getElementById('prevReview')?.addEventListener('click', () => moveReview(-1));
+
+  let touchStartX = 0, touchStartY = 0, touchActive = false;
+  if(slider){
+    slider.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchActive = true;
+    }, {passive:true});
+    slider.addEventListener('touchend', e => {
+      if(!touchActive) return;
+      touchActive = false;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)){
+        moveReview(dx < 0 ? 1 : -1);
+      }
+    }, {passive:true});
+  }
+
+  /* =========================================================
+     Reveal-анимации
+     ========================================================= */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
     });
-  });
-  $('#builderMessage').addEventListener('input', e => {
-    const el = $('#previewCake');
-    if(el) el.textContent = e.target.value.trim() ? 'Надпись: «' + e.target.value.trim() + '»' : '';
-  });
-  function recalcBuilder(){
-    let add=0;
-    $$('.option.active').forEach(x=>{add += Number(x.dataset.add||0)});
-    builderTotal=basePrice+add;
-    $('#builderTotal').textContent=money(builderTotal);
-  }
-  $('#builderCartBtn').addEventListener('click',addCustomToCart);
+  }, {threshold:.12});
+  $$('.reveal').forEach(el => observer.observe(el));
 
-  let reviewIndex=0;
-  const slider=$('#reviewSlider');
-  function moveReview(dir){
-    const total=$$('.review-card',slider).length;
-    reviewIndex=(reviewIndex+dir+total)%total;
-    slider.style.transform=`translateX(-${reviewIndex*100}%)`;
-  }
-  $('#nextReview').addEventListener('click',()=>moveReview(1));
-  $('#prevReview').addEventListener('click',()=>moveReview(-1));
-
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}});
-  },{threshold:.12});
-  $$('.reveal').forEach(el=>observer.observe(el));
-
+  /* =========================================================
+     Инициализация
+     ========================================================= */
   renderProducts();
   updateCart();
-  recalcBuilder();
+  goToReview(0);
 </script>
 </body>
 </html>
